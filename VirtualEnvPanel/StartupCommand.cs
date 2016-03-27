@@ -77,6 +77,10 @@ namespace VirtualEnvPanel
             }
             pi.EnvironmentVariables["PATH"] = path;
             pi.FileName = Executable;
+            if (IsAdmin)
+            {
+                pi.Verb = "runas";
+            }
             pi.UseShellExecute = false;
             if (System.IO.File.Exists(Executable))
             {

@@ -42,6 +42,7 @@ namespace VirtualEnvPanel
                 Tile tile = new Tile();
                 tile.Title = c.Title;
                 tile.Name = c.Name;
+                //tile.Style.BasedOn
                 tile.Width = 80;
                 tile.Height = 80;
                 tile.HorizontalAlignment = HorizontalAlignment.Left;
@@ -49,10 +50,12 @@ namespace VirtualEnvPanel
                 tile.Visibility = Visibility.Visible;
                 tile.Margin = new Thickness(offset, left, 0, 0);
                 tile.Click+= new RoutedEventHandler(TileClickEvent);
+                //tile.PreviewMouseDoubleClick
                 offset += 90;
-                if (left + 80 > Width)
+                if (offset + 80 > Width)
                 {
-                    left = 40;
+                    offset = 40;
+                    left += 90;
                 }
                 baseGrid.Children.Add(tile);
                 baseGrid.RegisterName(c.Name, tile);
