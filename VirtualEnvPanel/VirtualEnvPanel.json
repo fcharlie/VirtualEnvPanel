@@ -1,0 +1,28 @@
+﻿{
+    "Description": "Virtual Environment Panel",
+    "App": [
+        {
+            "Title": "Visual Studio Code",
+            "Name": "VSCode",
+            "Executable": "C:\\Program Files (x86)\\Microsoft VS Code\\Code.exe",
+            "IsAdmin": false,
+            "Args": [
+                "-v"
+            ],
+            "Path": [
+                "F:\\Clangbuilder\\packages\\CMake\\bin",
+                "C:\\Program Files\\nodejs",
+                "D:\\Clang\\bin"
+            ]
+        },
+        {
+            "Title": "ClangBuilder Environment",
+            "Name": "Clangbuilder",
+            "Executable": "PowerShell",
+            "InitializeScript": "",
+            "Icon": "${OWNER}/app.ico",
+            "Args": [],
+            "Path": []
+        }
+    ]
+}

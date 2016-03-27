@@ -1,0 +1,39 @@
+﻿<simpleChildWindow:ChildWindow x:Class="VirtualEnvPanel.EditCommandWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+        xmlns:local="clr-namespace:VirtualEnvPanel"
+        mc:Ignorable="d"
+        Title="Edit App Launcher Args" 
+		CloseOnOverlay="True"
+        ChildWindowWidth="600"
+        ChildWindowHeight="480"
+        FontSize="15px"
+		GlowBrush="{DynamicResource AccentColorBrush}"
+		BorderBrush="{DynamicResource AccentColorBrush}"
+        HorizontalContentAlignment="Center"
+        VerticalContentAlignment="Center"
+		BorderThickness="1"
+		ShowCloseButton="True">
+    <Grid>
+        <Label HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top">Title:</Label>
+        <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="145,20,0,0" Width="270" Height="25"></TextBox>
+        <Label Margin="20,60,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">Executable:</Label>
+        <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="145,60,0,0" Width="270" Height="25"></TextBox>
+        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Margin="425,60,0,0" Width="120" Height="25" Content="Get App"></Button>
+        <Label Margin="20,100,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">Icon:</Label>
+        <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="145,100,0,0" Width="270" Height="25"></TextBox>
+        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Margin="425,100,0,0" Width="120" Height="25" Content="Get Icon"></Button>
+        <Label Margin="20,140,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">InitializeScript:</Label>
+        <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="145,140,0,0" Width="270" Height="25"></TextBox>
+        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Margin="425,140,0,0" Width="120" Height="25" Content="Get Script"></Button>
+        <Label Margin="20,180,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">Path:</Label>
+        <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="145,180,0,0" Width="270" Height="50"></TextBox>
+        <Label Margin="20,240,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">Args:</Label>
+        <TextBox VerticalAlignment="Top" HorizontalAlignment="Left" Margin="145,240,0,0" Width="270" Height="50"></TextBox>
+        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Margin="145,320,0,0" Width="120" Height="30" Content="Cancel"></Button>
+        <Button VerticalAlignment="Top" HorizontalAlignment="Left" Margin="295,320,0,0" Width="120" Height="30" Content="OK"></Button>
+    </Grid>
+</simpleChildWindow:ChildWindow>
