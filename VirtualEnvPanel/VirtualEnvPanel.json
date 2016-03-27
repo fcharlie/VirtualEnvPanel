@@ -7,7 +7,6 @@
             "Executable": "C:\\Program Files (x86)\\Microsoft VS Code\\Code.exe",
             "IsAdmin": false,
             "Args": [
-                "-v"
             ],
             "Path": [
                 "F:\\Clangbuilder\\packages\\CMake\\bin",

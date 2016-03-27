@@ -26,7 +26,7 @@ namespace VirtualEnvPanel
         {
             StringBuilder sb = new StringBuilder(260);
             IntPtr ptr = new IntPtr();
-            SearchPath(null,s,null,sb.Capacity,sb,out ptr);
+            SearchPath(null, s, null, sb.Capacity, sb, out ptr);
             return sb.ToString();
         }
         public string Title { get; set; }
@@ -47,14 +47,15 @@ namespace VirtualEnvPanel
         /// <returns></returns>
         public bool Execute()
         {
-            if (InitializeScript==null)
+            if (InitializeScript == null)
             {
                 return NativeExecute() == 0;
             }
             if (InitializeScript.EndsWith(".ps1"))
             {
                 return PowerShellExecute() == 0;
-            }else if (InitializeScript.EndsWith(".cmd") || InitializeScript.EndsWith(".bat"))
+            }
+            else if (InitializeScript.EndsWith(".cmd") || InitializeScript.EndsWith(".bat"))
             {
                 return CmdExecute() == 0;
             }
@@ -72,14 +73,28 @@ namespace VirtualEnvPanel
             var path = System.Environment.GetEnvironmentVariable("PATH");
             foreach (var e in Path)
             {
+                if (e.Length == 0)
+                    continue;
                 var p = e.Replace(@"\\", @"\");
                 path += ";" + p;
             }
             pi.EnvironmentVariables["PATH"] = path;
             pi.FileName = Executable;
-            if (IsAdmin)
+            if (Args.Count > 0)
             {
-                pi.Verb = "runas";
+                string args = "";
+                foreach (var a in Args)
+                {
+                    if (a.Contains(" "))
+                    {
+                        args += " \"" + a + "\"";
+                    }
+                    else
+                    {
+                        args += " " + a;
+                    }
+                }
+                pi.Arguments = args;
             }
             pi.UseShellExecute = false;
             if (System.IO.File.Exists(Executable))
@@ -96,6 +111,44 @@ namespace VirtualEnvPanel
         /// <returns></returns>
         private int PowerShellExecute()
         {
+            string paths = "";
+            foreach (var p in Path)
+            {
+                paths += p + ";";
+            }
+            string Argument = String.Format("-NoProfile -ExecutionPolicy unrestricted -Command  \"& {{ Invoke-Expression {0};$env:PATH=\"{1};$env:PATH\"; Start-Process -FilePath {2} -Verb {3} }}\"", InitializeScript, paths,  Executable, IsAdmin?"runas":"open");
+            if (Args.Count > 0)
+            {
+                string args = "";
+                foreach (var a in Args)
+                {
+                    if (a.Contains(" "))
+                    {
+                        args += " \"" + a + "\"";
+                    }
+                    else
+                    {
+                        args += " " + a;
+                    }
+                }
+                Argument += " -ArgumentList \"" + args + "\" ";
+            }
+            if (IsAdmin)
+            {
+
+            }
+            /*
+                 PowerShell -PSConsoleFile SqlSnapIn.Psc1
+                 PowerShell -version 2.0 -NoLogo -InputFormat text -OutputFormat XML
+                 PowerShell -Command {Get-EventLog -LogName security}
+                 PowerShell -Command "& {Get-EventLog -LogName security}"
+                 # To use the -EncodedCommand parameter:
+                 $command = 'dir "c:\program files" '
+                 $bytes = [System.Text.Encoding]::Unicode.GetBytes($command)
+                 $encodedCommand = [Convert]::ToBase64String($bytes)
+                 powershell.exe -encodedCommand $encodedCommand
+             */
+            
             return 0;
         }
         /// <summary>
@@ -106,19 +159,39 @@ namespace VirtualEnvPanel
         {
             ///
             //var command = "cmd.exe";
-            string filename =System.IO.Path.GetTempFileName()+".bat";
+            string filename = System.IO.Path.GetTempFileName() + ".bat";
             StreamWriter sw = new StreamWriter(filename);
             sw.WriteLine("@echo off");
-            string path="";
-            foreach(var s in Path)
+            string path = "";
+            foreach (var s in Path)
             {
-                path += s+";";
+                path += s + ";";
             }
+
             sw.WriteLine("SET PATH={0};%PATH%", path);
             sw.WriteLine("call {0}", InitializeScript);
-            sw.WriteLine("start /w {0}", Executable,Args);
+            if (Args.Count == 0)
+            {
+                sw.WriteLine("start /w {0}", Executable);
+            }
+            else
+            {
+                string args = "";
+                foreach (var a in Args)
+                {
+                    if (a.Contains(" "))
+                    {
+                        args += " \"" + a + "\"";
+                    }
+                    else
+                    {
+                        args += " " + a;
+                    }
+                }
+                sw.WriteLine("start /w {0} {1}", Executable, args);
+            }
             sw.Close();
-            Process ps=null;
+            Process ps = null;
             if (IsAdmin)
             {
                 var psi = new ProcessStartInfo(filename)

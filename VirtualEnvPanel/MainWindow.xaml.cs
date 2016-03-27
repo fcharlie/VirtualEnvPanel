@@ -42,15 +42,16 @@ namespace VirtualEnvPanel
                 Tile tile = new Tile();
                 tile.Title = c.Title;
                 tile.Name = c.Name;
+                tile.MouseRightButtonUp += new MouseButtonEventHandler(EditWindowEvent);
                 //tile.Style.BasedOn
                 tile.Width = 80;
                 tile.Height = 80;
+                
                 tile.HorizontalAlignment = HorizontalAlignment.Left;
                 tile.VerticalAlignment = VerticalAlignment.Top;
                 tile.Visibility = Visibility.Visible;
                 tile.Margin = new Thickness(offset, left, 0, 0);
                 tile.Click+= new RoutedEventHandler(TileClickEvent);
-                //tile.PreviewMouseDoubleClick
                 offset += 90;
                 if (offset + 80 > Width)
                 {
@@ -85,13 +86,13 @@ namespace VirtualEnvPanel
             }
             return true;
         }
-        private async void MovingTest_OnClick(object sender, RoutedEventArgs e)
+        private async void DisplayEditWindow(object sender, RoutedEventArgs e)
         {
             await this.ShowChildWindowAsync(new EditCommandWindow() { IsModal=false});
         }
-        private void ChildWindowEdit(object sender, RoutedEventArgs e)
+        private void EditWindowEvent(object sender, RoutedEventArgs e)
         {
-            MovingTest_OnClick(sender, e);
+            DisplayEditWindow(sender, e);
         }
     }
 }
