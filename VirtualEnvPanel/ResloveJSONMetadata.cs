@@ -15,6 +15,7 @@ namespace VirtualEnvPanel
         public string Description { get; set; }
         private StartupCommand JsonObjectToCommand(JObject o)
         {
+            //Movie m = JsonConvert.DeserializeObject<Movie>(json);
             StartupCommand cmd = new StartupCommand();
             cmd.Title = (string)o["Title"];
             cmd.Name = (string)o["Name"];
