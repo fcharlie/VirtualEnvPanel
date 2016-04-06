@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace VirtualEnvPanel
 {
-    class EnvironmentValueResolve
+    class EnvironmentVariableManager
     {
         private string GetEnvironmentValueT(string k)
         {

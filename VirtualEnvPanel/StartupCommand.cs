@@ -39,7 +39,8 @@ namespace VirtualEnvPanel
         public List<string> Args { get; set; }
         public StartupCommand()
         {
-            //// do some thing
+            Path = new List<string>();
+            Args = new List<string>();
         }
         /// <summary>
         /// 
@@ -116,7 +117,12 @@ namespace VirtualEnvPanel
             {
                 paths += p + ";";
             }
-            string Argument = String.Format("-NoProfile -ExecutionPolicy unrestricted -Command  \"& {{ Invoke-Expression {0};$env:PATH=\"{1};$env:PATH\"; Start-Process -FilePath {2} -Verb {3} }}\"", InitializeScript, paths,  Executable, IsAdmin?"runas":"open");
+            string Argument = String.Format("-NoProfile -ExecutionPolicy unrestricted -Command  \"& {{ Invoke-Expression {0};$env:PATH=\"{1};$env:PATH\"; Start-Process -FilePath {2} -Verb {3} }}\"",
+                InitializeScript, 
+                paths,  
+                Executable, 
+                IsAdmin?"runas":"open");
+
             if (Args.Count > 0)
             {
                 string args = "";

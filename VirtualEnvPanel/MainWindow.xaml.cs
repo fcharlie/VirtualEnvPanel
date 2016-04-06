@@ -23,7 +23,8 @@ namespace VirtualEnvPanel
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-        private List<StartupCommand> commands;
+        //private List<StartupCommand> commands;
+        private PanelMetadata panelMetadata;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,11 +34,12 @@ namespace VirtualEnvPanel
         {
             var self = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
             var jsonfile= System.IO.Path.GetDirectoryName(self) +"\\VirtualEnvPanel.json";
-            var jsonmeta = new ResloveJSONMetadata(jsonfile);
-            commands = jsonmeta.StartupCommandGet();
+            //var jsonmeta = new ResloveJSONMetadata(jsonfile);
+            //commands = jsonmeta.StartupCommandGet();
+            panelMetadata = PanelMetadata.Builder(jsonfile);
             int offset = 40;
             int left = 40;
-           foreach(var c in commands)
+           foreach(var c in panelMetadata.App)
             {
                 Tile tile = new Tile();
                 tile.Title = c.Title;
@@ -68,7 +70,7 @@ namespace VirtualEnvPanel
         private void TileClickEvent(object sender, RoutedEventArgs e)
         {
             Tile tile = sender as Tile;
-            foreach(var c in commands)
+            foreach(var c in panelMetadata.App)
             {
                 if (tile.Name == c.Name)
                 {

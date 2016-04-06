@@ -79,8 +79,8 @@
     <Compile Include="EditCommandWindow.xaml.cs">
       <DependentUpon>EditCommandWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EnvironmentValueResolve.cs" />
-    <Compile Include="ResloveJSONMetadata.cs" />
+    <Compile Include="EnvironmentVariableManager.cs" />
+    <Compile Include="PanelMetadata.cs" />
     <Compile Include="StartupCommand.cs" />
     <Page Include="EditCommandWindow.xaml">
       <SubType>Designer</SubType>
